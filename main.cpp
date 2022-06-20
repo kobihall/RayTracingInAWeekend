@@ -31,7 +31,7 @@ public:
 Application* CreateApplication(int argc, char** argv)
 {
 	AppSettings spec;
-	spec.Name = "ImGui Example";
+	spec.Name = "Raytracing Application";
     spec.Width = 1600;
     spec.Height = 900;
 
