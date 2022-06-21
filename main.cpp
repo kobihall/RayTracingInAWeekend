@@ -1,7 +1,11 @@
 #include <iostream>
 #include <chrono>
+
 #include "Application.h"
 #include "Image.h"
+
+#include "color.h"
+#include "vec3.h"
 
 extern Application* CreateApplication(int argc, char** argv);
 bool g_ApplicationRunning = true;
@@ -51,18 +55,10 @@ public:
 			m_ImageData = new uint32_t[m_ViewportWidth * m_ViewportHeight];
 		}
 
-		for(uint32_t j = 0; j < m_ViewportHeight; ++j){//m_ViewportHeight-1; j >= 0; --j){
+		for(uint32_t j = 0; j < m_ViewportHeight; ++j){
 			for(uint32_t i = 0; i < m_ViewportWidth; ++i){
-				auto r = double(i) / (m_ViewportWidth-1);
-				auto g = double(j) / (m_ViewportHeight-1);
-				auto b = 0.25;
-
-				uint8_t ir = static_cast<uint8_t>(255.999 * r);
-				uint8_t ig = static_cast<uint8_t>(255.999 * g);
-				uint8_t ib = static_cast<uint8_t>(255.999 * b);
-				uint8_t ia = 255;
-				
-				m_ImageData[(m_ViewportHeight - 1 - j)*m_ViewportWidth + i] = (ia << 24) | (ib << 16) | (ig << 8) | ir;
+				color pixel_color(double(i) / (m_ViewportWidth-1), double(j) / (m_ViewportHeight-1), 0.25);
+				m_ImageData[(m_ViewportHeight - 1 - j)*m_ViewportWidth + i] = write_color(pixel_color);
 			}
 		}
 
