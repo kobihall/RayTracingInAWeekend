@@ -1,3 +1,5 @@
+#include <iostream>
+#include <chrono>
 #include "Application.h"
 #include "Image.h"
 
@@ -22,6 +24,7 @@ public:
 	virtual void OnUIRender() override
 	{
 		ImGui::Begin("Settings");
+		ImGui::Text("Last render: %.3fms", m_LastRenderTime);
 		if(ImGui::Button("Render")) {
 			Render();
 		}
@@ -40,17 +43,32 @@ public:
 
 	void Render()
 	{
+		auto m_Start = std::chrono::high_resolution_clock::now();
+		
 		if(!m_Image || m_ViewportWidth != m_Image->GetWidth() || m_ViewportHeight != m_Image->GetHeight()) {
 			m_Image = std::make_shared<Image>(m_ViewportWidth, m_ViewportHeight, ImageFormat::RGBA);
 			delete[] m_ImageData;
 			m_ImageData = new uint32_t[m_ViewportWidth * m_ViewportHeight];
 		}
 
-		for(uint32_t i = 0; i < m_ViewportWidth * m_ViewportHeight; i++){
-			m_ImageData[i] = 0xffff00ff;
+		for(uint32_t j = 0; j < m_ViewportHeight; ++j){//m_ViewportHeight-1; j >= 0; --j){
+			for(uint32_t i = 0; i < m_ViewportWidth; ++i){
+				auto r = double(i) / (m_ViewportWidth-1);
+				auto g = double(j) / (m_ViewportHeight-1);
+				auto b = 0.25;
+
+				uint8_t ir = static_cast<uint8_t>(255.999 * r);
+				uint8_t ig = static_cast<uint8_t>(255.999 * g);
+				uint8_t ib = static_cast<uint8_t>(255.999 * b);
+				uint8_t ia = 255;
+				
+				m_ImageData[(m_ViewportHeight - 1 - j)*m_ViewportWidth + i] = (ia << 24) | (ib << 16) | (ig << 8) | ir;
+			}
 		}
 
 		m_Image->SetData(m_ImageData);
+
+		m_LastRenderTime = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now() - m_Start).count() * 0.001f * 0.001f;
 	}
 private:
 	uint32_t m_ViewportWidth = 0;
@@ -59,6 +77,8 @@ private:
 	std::shared_ptr<Image> m_Image;
 
 	uint32_t* m_ImageData = nullptr;
+
+	float m_LastRenderTime = 0.0f;
 };
 
 Application* CreateApplication(int argc, char** argv)
