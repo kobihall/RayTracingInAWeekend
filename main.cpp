@@ -3,9 +3,8 @@
 
 #include "Application.h"
 #include "Image.h"
+#include "Renderer.h"
 
-#include "color.h"
-#include "vec3.h"
 
 extern Application* CreateApplication(int argc, char** argv);
 bool g_ApplicationRunning = true;
@@ -19,12 +18,16 @@ int main(int argc, char** argv)
 		delete app;
 	}
 
-		return 0;
+	return 0;
 }
 
 class ExampleLayer : public Layer
 {
 public:
+	ExampleLayer(){
+		m_renderer = Renderer();
+	}
+
 	virtual void OnUIRender() override
 	{
 		ImGui::Begin("Settings");
@@ -55,12 +58,7 @@ public:
 			m_ImageData = new uint32_t[m_ViewportWidth * m_ViewportHeight];
 		}
 
-		for(uint32_t j = 0; j < m_ViewportHeight; ++j){
-			for(uint32_t i = 0; i < m_ViewportWidth; ++i){
-				color pixel_color(double(i) / (m_ViewportWidth-1), double(j) / (m_ViewportHeight-1), 0.25);
-				m_ImageData[(m_ViewportHeight - 1 - j)*m_ViewportWidth + i] = write_color(pixel_color);
-			}
-		}
+		m_renderer.render(m_ImageData, m_ViewportWidth, m_ViewportHeight);
 
 		m_Image->SetData(m_ImageData);
 
@@ -71,6 +69,8 @@ private:
 	uint32_t m_ViewportHeight = 0;
 
 	std::shared_ptr<Image> m_Image;
+
+	Renderer m_renderer;
 
 	uint32_t* m_ImageData = nullptr;
 
