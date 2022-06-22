@@ -35,6 +35,8 @@ public:
 		if(ImGui::Button("Render")) {
 			Render();
 		}
+		ImGui::Text("Viewport width: %d", m_ViewportWidth);
+		ImGui::Text("Viewport height: %d", m_ViewportHeight);
 		ImGui::End();
 
 		ImGui::Begin("Viewport");
@@ -81,8 +83,8 @@ Application* CreateApplication(int argc, char** argv)
 {
 	AppSettings spec;
 	spec.Name = "Raytracing Application";
-    spec.Width = 1600;
-    spec.Height = 900;
+    spec.Width = 456;
+    spec.Height = 324;
 
 	Application* app = new Application(spec);
 	app->PushLayer<ExampleLayer>();
