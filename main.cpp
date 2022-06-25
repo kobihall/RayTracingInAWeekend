@@ -45,7 +45,7 @@ public:
 		m_ViewportHeight = ImGui::GetContentRegionAvail().y;
 
 		if(m_Image)
-			ImGui::Image(m_Image->GetDescriptorSet(), {(float)m_Image->GetWidth(), (float)m_Image->GetHeight()});
+			ImGui::Image(m_Image->GetDescriptorSet(), {(float)m_Image->GetWidth(), (float)m_Image->GetHeight()}, ImVec2(0, 1), ImVec2(1, 0));
 
 		ImGui::End();
 	}

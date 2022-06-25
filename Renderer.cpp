@@ -6,22 +6,6 @@
 #include "color.h"
 #include "sphere.h"
 
-
-double hit_sphere(const point3& center, double radius, const ray& r) 
-{
-    vec3 oc = r.origin() - center;
-    auto a = r.direction().length_squared();
-    auto half_b = dot(oc, r.direction());
-    auto c = oc.length_squared() - radius*radius;
-    auto discriminant = half_b*half_b - a*c;
-
-    if (discriminant < 0) {
-        return -1.0;
-    } else {
-        return (-half_b - sqrt(discriminant) ) / a;
-    }
-}
-
 color ray_color(const ray& r, const hittable& world) 
 {
     hit_record rec;
@@ -53,7 +37,7 @@ void Renderer::render(uint32_t* ImageData, uint32_t ViewportWidth, uint32_t View
             double v = double(j) / (ViewportHeight-1);
             ray r(origin, lower_left_corner + u*horizontal + v*vertical - origin);
 			color pixel_color = ray_color(r, world);
-			ImageData[(ViewportHeight - 1 - j)*ViewportWidth + i] = write_color(pixel_color);
+			ImageData[j*ViewportWidth + i] = write_color(pixel_color);
 		}
 	}
 }
