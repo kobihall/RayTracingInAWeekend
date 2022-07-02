@@ -5,6 +5,7 @@
 #include "vec3.h"
 #include "color.h"
 #include "sphere.h"
+#include "camera.h"
 
 color ray_color(const ray& r, const hittable& world) 
 {
@@ -25,17 +26,13 @@ Renderer::Renderer()
 
 void Renderer::render(uint32_t* ImageData, uint32_t ViewportWidth, uint32_t ViewportHeight)
 {
-    double aspect_ratio = double(ViewportWidth)/double(ViewportHeight);
-    double camera_width = aspect_ratio*camera_height;
-    vec3 horizontal = vec3(camera_width, 0, 0);
-    vec3 vertical = vec3(0, camera_height, 0);
-    vec3 lower_left_corner = origin - horizontal/2 - vertical/2 - vec3(0, 0, focal_length);
+    camera _camera(ViewportWidth, ViewportHeight);
 
     for(uint32_t j = 0; j < ViewportHeight; ++j){
         for(uint32_t i = 0; i < ViewportWidth; ++i){
             double u = double(i) / (ViewportWidth-1);
             double v = double(j) / (ViewportHeight-1);
-            ray r(origin, lower_left_corner + u*horizontal + v*vertical - origin);
+            ray r = _camera.get_ray(u, v);
 			color pixel_color = ray_color(r, world);
 			ImageData[j*ViewportWidth + i] = write_color(pixel_color);
 		}
