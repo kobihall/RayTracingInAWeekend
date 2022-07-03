@@ -35,6 +35,10 @@ public:
 		if(ImGui::Button("Render")) {
 			Render();
 		}
+		ImGui::Checkbox("Render every frame", &m_everyFrame);
+		if(m_everyFrame){
+			Render();
+		}
 		ImGui::Text("Viewport width: %d", m_ViewportWidth);
 		ImGui::Text("Viewport height: %d", m_ViewportHeight);
 		ImGui::End();
@@ -77,6 +81,7 @@ private:
 	uint32_t* m_ImageData = nullptr;
 
 	float m_LastRenderTime = 0.0f;
+	bool m_everyFrame = false;
 };
 
 Application* CreateApplication(int argc, char** argv)
