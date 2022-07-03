@@ -23,10 +23,22 @@ public:
 
 class metal : public material {
 public:
-    metal(const glm::dvec3& a) : albedo(a) {}
+    metal(const glm::dvec3& a, double f) : albedo(a), fuzz(f < 1 ? f : 1) {}
 
     virtual bool scatter(const ray& r_in, const hit_record& rec, glm::dvec3& attenuation, ray& scattered) const override;
 
 public:
     glm::dvec3 albedo;
+    double fuzz;
+};
+
+class phong : public material {
+public:
+    phong(const glm::dvec3& a, double s) : albedo(a), smoothness(s) {}
+
+    virtual bool scatter(const ray& r_in, const hit_record& rec, glm::dvec3& attenuation, ray& scattered) const override;
+
+public:
+    glm::dvec3 albedo;
+    double smoothness;
 };
