@@ -5,7 +5,6 @@
 #include "vec3.h"
 #include "color.h"
 #include "sphere.h"
-#include "camera.h"
 
 color ray_color(const ray& r, const hittable& world) 
 {
@@ -26,15 +25,30 @@ Renderer::Renderer()
 
 void Renderer::render(uint32_t* ImageData, uint32_t ViewportWidth, uint32_t ViewportHeight)
 {
-    camera _camera(ViewportWidth, ViewportHeight);
+    _camera = camera(ViewportWidth, ViewportHeight);
+    double pixelWidth = 1.0 / (ViewportWidth-1);
+    double pixelHeight = 1.0 / (ViewportHeight-1);
 
     for(uint32_t j = 0; j < ViewportHeight; ++j){
         for(uint32_t i = 0; i < ViewportWidth; ++i){
-            double u = double(i) / (ViewportWidth-1);
-            double v = double(j) / (ViewportHeight-1);
-            ray r = _camera.get_ray(u, v);
-			color pixel_color = ray_color(r, world);
-			ImageData[j*ViewportWidth + i] = write_color(pixel_color);
+            double u = double(i) * pixelWidth;
+            double v = double(j) * pixelHeight;
+			ImageData[j*ViewportWidth + i] = renderPerPixel(u,v, pixelWidth, pixelWidth);
 		}
 	}
+}
+
+uint32_t Renderer::renderPerPixel(double u, double v, double pixelWidth, double pixelHeight)
+{
+    if(settings.MSAA){
+        color pixel_color(0, 0, 0);
+        for(int i = 0; i < settings.msaaSamples; i++){
+            ray r = _camera.get_ray(u + random_double() * pixelWidth, v + random_double() * pixelHeight);
+            pixel_color += ray_color(r, world);
+        }
+        return write_color(pixel_color,settings.msaaSamples);
+    }
+    ray r = _camera.get_ray(u, v);
+    color pixel_color = ray_color(r, world);
+    return write_color(pixel_color,1);
 }

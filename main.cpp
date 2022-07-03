@@ -41,6 +41,10 @@ public:
 		}
 		ImGui::Text("Viewport width: %d", m_ViewportWidth);
 		ImGui::Text("Viewport height: %d", m_ViewportHeight);
+		ImGui::Checkbox("MSAA", &m_renderer.settings.MSAA);
+		if(m_renderer.settings.MSAA){
+			ImGui::SliderInt("# of samples", &m_renderer.settings.msaaSamples, 1, 100);
+		}
 		ImGui::End();
 
 		ImGui::Begin("Viewport");
