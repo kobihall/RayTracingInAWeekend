@@ -7,10 +7,10 @@ camera::camera()
     auto viewport_width = aspect_ratio * viewport_height;
     auto focal_length = 1.0;
 
-    m_origin = point3(0, 0, 0);
-    m_horizontal = vec3(viewport_width, 0.0, 0.0);
-    m_vertical = vec3(0.0, viewport_height, 0.0);
-    m_lower_left_corner = m_origin - m_horizontal/2 - m_vertical/2 - vec3(0, 0, focal_length);
+    m_origin = glm::dvec3(0, 0, 0);
+    m_horizontal = glm::dvec3(viewport_width, 0.0, 0.0);
+    m_vertical = glm::dvec3(0.0, viewport_height, 0.0);
+    m_lower_left_corner = m_origin - m_horizontal/2.0 - m_vertical/2.0 - glm::dvec3(0, 0, focal_length);
 }
 
 camera::camera(uint32_t ViewportWidth, uint32_t ViewportHeight)
@@ -20,10 +20,10 @@ camera::camera(uint32_t ViewportWidth, uint32_t ViewportHeight)
     auto viewport_width = aspect_ratio * viewport_height;
     auto focal_length = 1.0;
 
-    m_origin = point3(0, 0, 0);
-    m_horizontal = vec3(viewport_width, 0.0, 0.0);
-    m_vertical = vec3(0.0, viewport_height, 0.0);
-    m_lower_left_corner = m_origin - m_horizontal/2 - m_vertical/2 - vec3(0, 0, focal_length);
+    m_origin = glm::dvec3(0, 0, 0);
+    m_horizontal = glm::dvec3(viewport_width, 0.0, 0.0);
+    m_vertical = glm::dvec3(0.0, viewport_height, 0.0);
+    m_lower_left_corner = m_origin - m_horizontal/2.0 - m_vertical/2.0 - glm::dvec3(0, 0, focal_length);
 }
 
 ray camera::get_ray(double u, double v) const 

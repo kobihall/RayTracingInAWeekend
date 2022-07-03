@@ -1,16 +1,16 @@
 #pragma once
 
 #include "hittable.h"
-#include "vec3.h"
+#include <glm/glm.hpp>
 
 class sphere : public hittable
 {
 public:
     sphere() {}
-    sphere(point3 cen, double r) : center(cen), radius(r) {};
+    sphere(glm::dvec3 cen, double r) : center(cen), radius(r) {};
 
     virtual bool hit(const ray& r, double t_min, double t_max, hit_record& rec) const override;
 public:
-    point3 center;
+    glm::dvec3 center;
     double radius;
 };

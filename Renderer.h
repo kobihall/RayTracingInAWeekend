@@ -1,7 +1,7 @@
 #pragma once
 
 #include <cstdint>
-#include "vec3.h"
+#include <glm/glm.hpp>
 #include "hittable_list.h"
 #include "camera.h"
 
@@ -9,6 +9,7 @@ struct RenderSettings
 {
     bool MSAA = false;
     int msaaSamples = 1;
+    int rayDepth = 8;
 };
 
 class Renderer {
@@ -23,7 +24,7 @@ public:
 private:
     hittable_list world;
 
-    point3 origin = point3(0, 0, 0);
+    glm::dvec3 origin = glm::dvec3(0, 0, 0);
     double focal_length = 1.0;
     double camera_height = 2.0;
 
