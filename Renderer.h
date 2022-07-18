@@ -18,12 +18,11 @@ public:
     ~Renderer() {}
 
     RenderSettings settings;
+    hittable_list world;
 
     void render(uint32_t* ImageData, uint32_t ViewportWidth, uint32_t ViewportHeight);
     uint32_t renderPerPixel(double u, double v, double pixelWidth, double pixelHeight);
 private:
-    hittable_list world;
-
     glm::dvec3 origin = glm::dvec3(0, 0, 0);
     double focal_length = 1.0;
     double camera_height = 2.0;

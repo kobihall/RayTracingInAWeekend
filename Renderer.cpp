@@ -31,10 +31,10 @@ Renderer::Renderer()
     auto material_left   = std::make_shared<phong>(glm::dvec3(0.8, 0.8, 0.8), 1.0);
     auto material_right  = std::make_shared<phong>(glm::dvec3(0.8, 0.6, 0.2), 0.3);
 
-    world.add(std::make_shared<sphere>(glm::dvec3( 0.0, -100.5, -1.0), 100.0, material_ground));
-    world.add(std::make_shared<sphere>(glm::dvec3( 0.0,    0.0, -1.0),   0.5, material_center));
-    world.add(std::make_shared<sphere>(glm::dvec3(-1.0,    0.0, -1.0),   0.5, material_left));
-    world.add(std::make_shared<sphere>(glm::dvec3( 1.0,    0.0, -1.0),   0.5, material_right));
+    world.add(std::make_shared<sphere>(glm::dvec3( 0.0, -100.5, -1.0), 100.0, material_ground), "ground");
+    world.add(std::make_shared<sphere>(glm::dvec3( 0.0,    0.0, -1.0),   0.5, material_center), "center_sphere");
+    world.add(std::make_shared<sphere>(glm::dvec3(-1.0,    0.0, -1.0),   0.5, material_left), "left_sphere");
+    world.add(std::make_shared<sphere>(glm::dvec3( 1.0,    0.0, -1.0),   0.5, material_right), "right_sphere");
 }
 
 void Renderer::render(uint32_t* ImageData, uint32_t ViewportWidth, uint32_t ViewportHeight)

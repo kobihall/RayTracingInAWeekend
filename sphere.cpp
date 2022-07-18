@@ -1,5 +1,18 @@
 #include "sphere.h"
 
+#include "imgui/imgui.h"
+
+void sphere::params()
+{
+    double rMin = .001;
+    double rMax = 2;
+    ImGui::SliderScalar("radius", ImGuiDataType_Double, &radius, &rMin, &rMax, "%.3f");
+    double pMin = -1;
+    double pMax = 1;
+    ImGui::SliderScalarN("position", ImGuiDataType_Double, &center, 3, &pMin, &pMax, "%.1f");
+    return;
+}
+
 bool sphere::hit(const ray& r, double t_min, double t_max, hit_record& rec) const 
 {
     glm::dvec3 oc = r.origin() - center;

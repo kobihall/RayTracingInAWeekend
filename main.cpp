@@ -48,6 +48,13 @@ public:
 		}
 		ImGui::End();
 
+		ImGui::Begin("Scene");
+		static int item_current = 0;
+		char** c = reinterpret_cast<char**>(&m_renderer.world.IDs[0]);
+		ImGui::ListBox("Objects", &item_current, c, (int)m_renderer.world.IDs.size());
+		m_renderer.world.objects[item_current]->params();
+		ImGui::End();
+
 		ImGui::Begin("Viewport");
 
 		m_ViewportWidth = ImGui::GetContentRegionAvail().x;

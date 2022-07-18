@@ -1,5 +1,17 @@
 #include "hittable_list.h"
 
+void hittable_list::add(std::shared_ptr<hittable> object, char* ID)
+{
+    objects.push_back(object);
+    IDs.push_back(ID);
+    return;
+}
+
+void hittable_list::params()
+{
+    return;
+}
+
 bool hittable_list::hit(const ray& r, double t_min, double t_max, hit_record& rec) const
 {
     hit_record temp_rec;
