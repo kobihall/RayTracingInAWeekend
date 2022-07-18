@@ -42,3 +42,18 @@ public:
     glm::dvec3 albedo;
     double smoothness;
 };
+
+glm::dvec3 refract(const glm::dvec3& uv, const glm::dvec3& n, double niovernt);
+
+class dielectric : public material {
+public:
+    dielectric(double index_of_refraction) : ir(index_of_refraction) {}
+
+    virtual bool scatter(const ray& r_in, const hit_record& rec, glm::dvec3& attenuation, ray& scattered) const override;
+
+public:
+    double ir; //Index of Refraction
+
+private:
+    static double reflectance(double cosine, double ref_idx);
+};
