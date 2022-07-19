@@ -39,7 +39,7 @@ Renderer::Renderer()
 
 void Renderer::render(uint32_t* ImageData, uint32_t ViewportWidth, uint32_t ViewportHeight)
 {
-    _camera = camera(ViewportWidth, ViewportHeight);
+    _camera = camera(ViewportWidth, ViewportHeight, 20, glm::dvec3(-2,2,1), glm::dvec3(0,0,-1),glm::dvec3(0,1,0));
     double pixelWidth = 1.0 / (ViewportWidth-1);
     double pixelHeight = 1.0 / (ViewportHeight-1);
 

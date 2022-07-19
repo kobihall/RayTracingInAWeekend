@@ -8,7 +8,7 @@
 class camera {
 public:
     camera();
-    camera(uint32_t ViewportWidth, uint32_t ViewportHeight);
+    camera(uint32_t ViewportWidth, uint32_t ViewportHeight, double vfov, glm::dvec3 lookfrom, glm::dvec3 lookat, glm::dvec3 vup);
 
     ray get_ray(double u, double v) const;
 
