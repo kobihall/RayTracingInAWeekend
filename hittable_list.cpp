@@ -1,6 +1,6 @@
 #include "hittable_list.h"
 
-void hittable_list::add(std::shared_ptr<hittable> object, char* ID)
+void hittable_list::add(std::shared_ptr<hittable> object, char const* ID)
 {
     objects.push_back(object);
     IDs.push_back(ID);
